@@ -1,25 +1,48 @@
 print("☆✼★ Welcome to my Store ★✼☆")
-print("Mcdonalds\n Chicken\n Door\n yummy chips\n Chair\n Microphone")
+print("Here is our menu:")
 
-print("Simple sales strategy: buy 3 or more items and get 10% off!")
+# Store ALL product names in one list
+names = ["burger", "chips", "drink", "cookie"]
 
-# Ask the user for the quantity and unit price
-quantity = int(input("How many items do you want? "))
-unit_price = float(input("What is the unit price? "))
+# Store ALL product prices in a second list
+prices = [5.00, 2.00, 3.00, 1.50]
 
-# Calculate the subtotal
-subtotal = quantity * unit_price
+# Start with a total of 0
+running_total = 0.0
 
-# Apply a discount if the customer buys 3 or more items
-discount = 0
-if quantity >= 3:
-    discount = subtotal * 0.10
-    print("You get a 10% discount!")
+# Let the customer order again and again
+while True:
+    # Show the menu with codes
+    for i in range(len(names)):
+        print(f"{i}: {names[i]} - ${prices[i]:.2f}")
 
-# Calculate the final total
-total_amount = subtotal - discount
+    # Ask the customer for a product code
+    code = int(input("Enter the product code (0, 1, 2, or 3): "))
 
-# Print the bill
-print("Subtotal: $" + str(subtotal))
-print("Discount: $" + str(discount))
-print("Total amount: $" + str(total_amount))
+    # Validate the code before using it
+    while code < 0 or code >= len(names):
+        print("Invalid code. Please try again.")
+        code = int(input("Enter the product code (0, 1, 2, or 3): "))
+
+    # Look up the product name and price using the code
+    product_name = names[code]
+    product_price = prices[code]
+
+    # Ask for the quantity
+    quantity = int(input("How many do you want? "))
+
+    # Calculate the total price for this purchase
+    total_price = product_price * quantity
+    running_total += total_price
+
+    # Print the result for this order
+    print(f"You bought {quantity} {product_name}(s)")
+    print(f"Total price for this order: ${total_price:.2f}")
+
+    # Ask if the customer wants to order again
+    again = input("Do you want to order again? (yes/no): ").lower().strip()
+    if again != "yes":
+        break
+
+# Print the final total
+print(f"Final total: ${running_total:.2f}")
