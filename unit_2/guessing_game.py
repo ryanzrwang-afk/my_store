@@ -3,24 +3,49 @@ import random
 play = True
 
 while play:
-    min_num = int(input("Min: "))
-    max_num = int(input("Max: "))
+    try:
+        min_num = int(input("Min: "))
+        max_num = int(input("Max: "))
+    except ValueError:
+        print("Please enter integer values for Min and Max.")
+        continue
 
     if min_num > max_num:
-        min_num, max_num = max_num, min_num
+        print("The minimum number cannot be greater than the maximum number. Please try again.")
+        continue
 
-    secret = random.randint(min_num, max_num)
+    target = random.randint(min_num, max_num)
 
     while True:
-        guess = int(input("Guess: "))
+        try:
+            guess = int(input("Guess: "))
+        except ValueError:
+            print("Please enter an integer.")
+            continue
 
-        if guess == secret:
+        if guess == target:
             print("Correct!")
             break
-        elif guess < secret:
+        if guess < target:
             print("Bigger!")
         else:
             print("Smaller!")
 
-    if input("Try again? (yes/no): ").strip().lower() != "yes":
+        abs_diffrence = abs(guess - target)
+        if abs_diffrence <= 10:
+            print("Hot")
+        elif abs_diffrence <= 30:
+            print("Warm")
+        else:
+            print("Cold")
+
+    answer = input("Try again? (yes/no): ")
+    while answer != "yes" and answer != "no":
+        print("Please type 'yes' or 'no'.")
+        answer = input("Try again? (yes/no): ")
+    if answer == "no":
         play = False
+    else:
+        print("Here we go again")
+    if answer == "yes":
+        play = True
